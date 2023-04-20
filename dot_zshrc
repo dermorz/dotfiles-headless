@@ -1,0 +1,42 @@
+export ZPLUG_HOME=~/.zplug
+if [[ ! -d $ZPLUG_HOME ]]; then
+  git clone https://github.com/zplug/zplug $ZPLUG_HOME
+fi
+source $ZPLUG_HOME/init.zsh
+
+zstyle ':prezto:*:*' case-sensitive 'yes'
+zstyle ':prezto:*:*' color 'yes'
+zstyle ':prezto:module:editor' key-bindings 'vi'
+zstyle ':prezto:module:prompt' theme 'sorin'
+zstyle ':prezto:module:git:alias' skip 'yes'
+
+zplug "modules/environment", from:prezto
+zplug "modules/terminal", from:prezto
+zplug "modules/editor", from:prezto
+zplug "modules/history", from:prezto
+zplug "modules/spectrum", from:prezto
+zplug "modules/prompt", from:prezto
+zplug "modules/completion", from:prezto
+
+zplug "modules/archive", from:prezto
+zplug "modules/git", from:prezto
+zplug "modules/python", from:prezto
+zplug "modules/syntax-highlighting", from:prezto
+
+zplug "plugins/docker", from:oh-my-zsh
+zplug "zsh-vi-more/evil-registers"
+zplug "${HOME}/.zsettings", from:local, as:plugin
+zplug "kubermatic/fubectl"
+
+if ! zplug check --verbose; then
+  printf "Install zplug plugins? [y/N]: "
+  if read -q; then
+    echo; zplug install
+  fi
+fi
+
+zplug load
+
+. <(konf-go shellwrapper zsh)
+
+autoload -U +X bashcompinit && bashcompinit

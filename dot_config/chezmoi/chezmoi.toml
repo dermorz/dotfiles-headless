@@ -1,0 +1,10 @@
+[diff]
+  format = "git"
+  pager = "delta"
+
+[merge]
+  command = "nvim"
+  args = "-d"
+
+[git]
+  autoCommit = true
